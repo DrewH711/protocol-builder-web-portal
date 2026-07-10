@@ -19,7 +19,7 @@ if (!existingToken){
 
     const authUrl = new URL(`${baseUrl}/authorize`);
     authUrl.searchParams.set('response_type', 'code');
-    authUrl.searchParams.set('client_id', '2115cb1e-6f2a-4b68-ae1c-cfed8488301a');
+    authUrl.searchParams.set('client_id', '3d5890b5-e93a-4722-b0e4-da44c0cbe4b9');
     authUrl.searchParams.set('redirect_uri', `${webUrl}/callback.html`);
     authUrl.searchParams.set('code_challenge', challenge);
     authUrl.searchParams.set('code_challenge_method', 'S256');
