@@ -2,6 +2,7 @@ const existingToken = sessionStorage.getItem('access_token');
 const expires_in = sessionStorage.getItem('expires_in');
 
 const baseUrl = 'https://protocol-builder-mcp.calmforest-c0a43ae0.eastus2.azurecontainerapps.io'
+const webUrl = 'https://protocol-builder-mcp.calmforest-c0a43ae0.eastus2.azurecontainerapps.io/'
 
 if (!existingToken){
 
@@ -19,7 +20,7 @@ if (!existingToken){
     const authUrl = new URL(`${baseUrl}/authorize`);
     authUrl.searchParams.set('response_type', 'code');
     authUrl.searchParams.set('client_id', '2115cb1e-6f2a-4b68-ae1c-cfed8488301a');
-    authUrl.searchParams.set('redirect_uri', 'http://localhost:5000/callback.html');
+    authUrl.searchParams.set('redirect_uri', `${webUrl}/callback.html`);
     authUrl.searchParams.set('code_challenge', challenge);
     authUrl.searchParams.set('code_challenge_method', 'S256');
     authUrl.searchParams.set('state', state);

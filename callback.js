@@ -12,7 +12,7 @@ const res = await fetch(`${baseUrl}/token`, {
   body: new URLSearchParams({
     grant_type: 'authorization_code',
     code,
-    redirect_uri: 'http://localhost:5000/callback.html',
+    redirect_uri: `${webUrl}/callback.html`,
     client_id: '2115cb1e-6f2a-4b68-ae1c-cfed8488301a',
     code_verifier: sessionStorage.getItem('pkce_verifier'),
     resource: `${baseUrl}/mcp`
