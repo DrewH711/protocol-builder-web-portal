@@ -47,7 +47,7 @@ async function send(mcpMethod, params, requestID=null, mcpSessionID=null){
     return {res, result: null};
 }
 
-const url = "http://localhost:8000/mcp";
+const url = "https://protocol-builder-mcp.calmforest-c0a43ae0.eastus2.azurecontainerapps.io/mcp";
 
 async function deployProtocol(protocol, fileContents, commitMessage, releaseNotes, isLatest){
     let id = 1;
