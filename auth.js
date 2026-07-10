@@ -2,7 +2,7 @@ const existingToken = sessionStorage.getItem('access_token');
 const expires_in = sessionStorage.getItem('expires_in');
 
 const baseUrl = 'https://protocol-builder-mcp.calmforest-c0a43ae0.eastus2.azurecontainerapps.io'
-const webUrl = 'https://brave-coast-082803d0f.7.azurestaticapps.net/callback.html'
+const webUrl = 'https://brave-coast-082803d0f.7.azurestaticapps.net'
 
 if (!existingToken){
 
