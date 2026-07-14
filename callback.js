@@ -1,3 +1,5 @@
+const baseUrl="https://protocol-builder-mcp.calmforest-c0a43ae0.eastus2.azurecontainerapps.io"
+
 const params = new URLSearchParams(window.location.search);
 const code = params.get('code');
 const returnedState = params.get('state');
