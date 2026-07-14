@@ -1,4 +1,4 @@
-const baseUrl="https://protocol-builder-mcp.calmforest-c0a43ae0.eastus2.azurecontainerapps.io"
+import { webUrl, baseUrl } from "./auth.js";
 
 const params = new URLSearchParams(window.location.search);
 const code = params.get('code');
