@@ -17,9 +17,9 @@ if (!existingToken){
     const state = crypto.randomUUID();
     sessionStorage.setItem('oauth_state', state);
 
-    const authUrl = new URL(`${baseUrl}/authorize`);
+    const authUrl = new URL('https://clerk.portal.digital-trails.org/oauth/authorize');
     authUrl.searchParams.set('response_type', 'code');
-    authUrl.searchParams.set('client_id', '3d5890b5-e93a-4722-b0e4-da44c0cbe4b9');
+    authUrl.searchParams.set('client_id', 'BUKGLKFt30eAII8a');
     authUrl.searchParams.set('redirect_uri', `${webUrl}/callback.html`);
     authUrl.searchParams.set('code_challenge', challenge);
     authUrl.searchParams.set('code_challenge_method', 'S256');

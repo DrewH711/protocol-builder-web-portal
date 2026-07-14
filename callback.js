@@ -13,7 +13,7 @@ const res = await fetch(`${baseUrl}/token`, {
     grant_type: 'authorization_code',
     code,
     redirect_uri: `${webUrl}/callback.html`,
-    client_id: '3d5890b5-e93a-4722-b0e4-da44c0cbe4b9',
+    client_id: 'BUKGLKFt30eAII8a',
     code_verifier: sessionStorage.getItem('pkce_verifier'),
     resource: `${baseUrl}/mcp`
   }),
