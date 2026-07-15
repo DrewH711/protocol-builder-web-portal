@@ -1,32 +1,25 @@
-const existingToken = sessionStorage.getItem('access_token');
-const expires_in = sessionStorage.getItem('expires_in');
+import { Clerk } from "https://cdn.jsdelivr.net/npm/@clerk/clerk-js@5/+esm";
 
-const baseUrl = 'https://protocol-builder-mcp.calmforest-c0a43ae0.eastus2.azurecontainerapps.io';
-const webUrl = 'https://brave-coast-082803d0f.7.azurestaticapps.net';
 
-export { baseUrl, webUrl };
+const clerk = new Clerk('pk_test_c3VwcmVtZS1oYWRkb2NrLTQwLmNsZXJrLmFjY291bnRzLmRldiQ')
+await clerk.load();
 
-if (!existingToken){
+async function syncAccessToken() {
+  const token = clerk.session ? await clerk.session.getToken() : null;
+  if (token) sessionStorage.setItem('access_token', token);
+  else sessionStorage.removeItem('access_token');
+  return token;
+}
 
-    function base64url(buf) {
-    return btoa(String.fromCharCode(...new Uint8Array(buf)))
-        .replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
-    } 
-    const verifier = base64url(crypto.getRandomValues(new Uint8Array(32)));
-    const challenge = base64url(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(verifier)));
-    sessionStorage.setItem('pkce_verifier', verifier);
+window.getClerkToken = syncAccessToken;
 
-    const state = crypto.randomUUID();
-    sessionStorage.setItem('oauth_state', state);
-
-    const authUrl = new URL('https://clerk.portal.digital-trails.org/oauth/authorize');
-    authUrl.searchParams.set('response_type', 'code');
-    authUrl.searchParams.set('client_id', 'BUKGLKFt30eAII8a');
-    authUrl.searchParams.set('redirect_uri', `${webUrl}/callback.html`);
-    authUrl.searchParams.set('code_challenge', challenge);
-    authUrl.searchParams.set('code_challenge_method', 'S256');
-    authUrl.searchParams.set('state', state);
-    authUrl.searchParams.set('resource', `${baseUrl}/mcp`);
-
-    window.location = authUrl;
+if (!clerk.isSignedIn) {
+  console.log('not signed in yet');
+  sessionStorage.removeItem('access_token');
+  await clerk.redirectToSignIn({
+    redirectUrl: `${window.location.origin}/index.html`
+  });
+} else {
+  console.log('already signed in!');
+  await syncAccessToken();
 }
