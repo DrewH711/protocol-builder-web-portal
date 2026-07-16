@@ -14,12 +14,14 @@ async function syncAccessToken() {
 window.getClerkToken = syncAccessToken;
 
 if (!clerk.isSignedIn) {
-  console.log('not signed in yet');
+
   sessionStorage.removeItem('access_token');
   await clerk.redirectToSignIn({
     redirectUrl: `${window.location.origin}/index.html`
   });
+
 } else {
-  console.log('already signed in!');
+
   await syncAccessToken();
+  
 }

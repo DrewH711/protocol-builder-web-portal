@@ -137,3 +137,16 @@ button[type="submit"]:hover {
     gap: 2rem;
     justify-content: right;
 }
+
+.header-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+}
+
+.header-container-item{
+    width: 100;
+    height: 100;
+    padding: 10px;
+}

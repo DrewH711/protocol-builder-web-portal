@@ -8,18 +8,6 @@ function clearMessage(){
     document.getElementById("messages").textContent = "";
 }
 
-function clearFilesFromForm(){
-    const protocol = document.getElementById("protocol").value;
-    const commitMessage = document.getElementById("commitmessage").value;
-    const releaseNotes = document.getElementById("releasenotes").value;
-
-    document.getElementById("fileProtocolForm").reset();
-
-    document.getElementById("protocol").value = protocol;
-    document.getElementById("commitmessage").value = commitMessage;
-    document.getElementById("releasenotes").value = releaseNotes;
-}
-
 window.showMessage = showMessage;
 window.clearMessage = clearMessage;
 
@@ -49,9 +37,8 @@ document.getElementById("fileinput").addEventListener("change", (e) => {
             let allowedNames = allowedCSVNames[protocol];
             
             if( !(allowedNames.includes(file.name)) ) {
-                showMessage(`Error: ${file.name} does not match the naming scheme for ${document.getElementById(protocol).innerText}. Please refer to the naming scheme below.`, "red")
-                document.getElementById("fileProtocolForm").reset();
-                document.getElementById("protocol").value = protocol;
+                showMessage(`Error: ${file.name} does not match the naming scheme for ${document.getElementById(protocol).innerText}. Please refer to the naming scheme shown to the right.`, "red")
+                document.getElementById("fileinput").value = "";
                 return;
             }
 
@@ -108,7 +95,7 @@ document.getElementById("fileProtocolForm").addEventListener("submit", async (e)
     }
     catch(err){
         showMessage(`Error: Could not read file ${err.message}. Please try again`, "red");
-        clearFilesFromForm();
+        document.getElementById("fileinput").value = "";
         return;
     }
 
