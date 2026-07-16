@@ -1,7 +1,7 @@
 const existingToken = sessionStorage.getItem('access_token');
 const expires_in = sessionStorage.getItem('expires_in');
 
-const mcpBaseUrl = 'http://localhost:8000';
+const mcpBaseUrl = 'https://protocol-builder-mcp.calmforest-c0a43ae0.eastus2.azurecontainerapps.io';
 const redirectUri = `${window.location.origin}/callback.html`;
 const clientId = 'BUKGLKFt30eAII8a';
 
