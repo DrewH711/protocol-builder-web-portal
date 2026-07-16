@@ -36,10 +36,12 @@
             <input type="text" id="commitmessage" name="commitmessage" placeholder="Enter a commit message for this release" required><br><br>
             <textarea id="releasenotes" name="releasenotes" placeholder="Add release notes" rows="4" required></textarea><br><br>
             <label for="fileinput"></label>
-            <input type="file" id="fileinput" name="uploadedFiles" multiple="true" accept=".csv" required><br><br>
+            <input type="file" id="fileinput" name="uploadedFiles" multiple="true" accept=".csv" required>
+            <button id="clearFilesButton" type="reset">Clear Files</button><br><br>
             <label for="latest">Mark as latest?</label>
             <input type="checkbox" id="latest" name="latest" checked><br><br>
             <button type="submit">Deploy</button><br><br>
+            <button id="clearForm" type="clear">Clear Form</button><br>
             <div id="messages"></div>
         </form>
         </div>

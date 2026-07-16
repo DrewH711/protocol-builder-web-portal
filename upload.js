@@ -11,6 +11,17 @@ function clearMessage(){
 window.showMessage = showMessage;
 window.clearMessage = clearMessage;
 
+document.getElementById("clearFilesButton").addEventListener("click", (e) => {
+    e.preventDefault();
+    document.getElementById("fileinput").value = "";
+    clearMessage();
+})
+
+document.getElementById("clearForm").addEventListener("click", (e) => {
+    document.getElementById("fileProtocolForm").reset();
+    clearMessage();
+});
+
 document.getElementById("protocol").addEventListener("change", () => {
     clearMessage();
     const protocol = document.getElementById("protocol").value;
@@ -24,6 +35,8 @@ document.getElementById("protocol").addEventListener("change", () => {
     document.getElementById("protocolInfo").innerHTML = `File naming scheme for ${document.getElementById(protocol).textContent}:<br><br>${fileSchemeText}`;
 })
 
+let disallowedFiles;
+
 //validate files on change
 document.getElementById("fileinput").addEventListener("change", (e) => {
     clearMessage();
@@ -31,17 +44,31 @@ document.getElementById("fileinput").addEventListener("change", (e) => {
     if(protocol!==""){
 
         const files = e.target.files;
+
+        disallowedFiles = new Array();
+        const allowedFiles = new Array();
+        const allowedNames = allowedCSVNames[protocol];
         
         for(let i=0; i<files.length; i++){
             let file = files.item(i);
-            let allowedNames = allowedCSVNames[protocol];
             
             if( !(allowedNames.includes(file.name)) ) {
-                showMessage(`Error: ${file.name} does not match the naming scheme for ${document.getElementById(protocol).innerText}. Please refer to the naming scheme shown to the right.`, "red")
-                document.getElementById("fileinput").value = "";
-                return;
+                disallowedFiles.push(file.name);
             }
+            else allowedFiles.push(file.name);
 
+        }
+
+        if ( disallowedFiles.length!==0 ){
+            let disallowedFileNames = "";
+            for (const file of disallowedFiles){
+                disallowedFileNames += `${file}, `;
+            }
+            showMessage(`Error: the following ${disallowedFiles.length} files do not match the naming scheme for ${document.getElementById(protocol).innerText}: ${disallowedFileNames.replace(/\,\s*?$/, "")}. Please refer to the naming scheme shown to the right.`, "red"); 
+        }
+
+        else{
+            showMessage(`Success! ${files.length} files uploaded.`, "green");
         }
 
     }
@@ -69,8 +96,13 @@ document.getElementById("fileProtocolForm").addEventListener("submit", async (e)
     const commitMessage = document.getElementById("commitmessage").value;
     const releaseNotes = document.getElementById("releasenotes").value;
 
-    if(files.length===0){
+    if (files.length===0){
         showMessage("Error: no files uploaded", "red");
+        return;
+    }
+
+    else if (disallowedFiles.length!==0){
+        showMessage(`Error: the following ${disallowedFiles.length} files do not match the naming scheme for ${document.getElementById(protocol).innerText}: ${disallowedFiles.join(", ")}. Please refer to the naming scheme shown to the right.`, "red"); 
         return;
     }
 
@@ -128,7 +160,8 @@ const allowedCSVNames = {
         "short_scenarios.csv",
         "survey_questions.csv",
         "tips.csv",
-        "write_your_own.csv"
+        "write_your_own.csv",
+        "images.csv"
     ],
 
     "mindtrails_spanish": [
