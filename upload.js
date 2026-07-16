@@ -8,6 +8,14 @@ function clearMessage(){
     document.getElementById("messages").textContent = "";
 }
 
+function showSpinner() {
+  document.getElementById("overlay").style.display = "block";
+}
+
+function hideSpinner() {
+  document.getElementById("overlay").style.display = "none";
+}
+
 window.showMessage = showMessage;
 window.clearMessage = clearMessage;
 
@@ -90,6 +98,8 @@ document.getElementById("latest").addEventListener("change", () => {
 //deploy on file submission
 document.getElementById("fileProtocolForm").addEventListener("submit", async (e) => {
     e.preventDefault();
+
+    showSpinner();
 
     const protocol = document.getElementById("protocol").value;
     const files = document.getElementById("fileinput").files;
