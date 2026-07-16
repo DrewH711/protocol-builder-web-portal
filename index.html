@@ -11,10 +11,11 @@
 </head>
 
 <body>
-    <div id="overlay">
-        <div class="loader"></div>
+    <div class="overlay" id="spinner-overlay">
+        <div id="loader" class="overlay-element"></div>
+        <div id="loading-text" class="overlay-element"><p>What does it look like if the text is really long?</p></div>
     </div>
-    
+
     <div class="header-container">
         <div class="header-container-item">
             <h1 width="100" height="100">Digital Trails Protocol Builder</h1>
@@ -37,16 +38,16 @@
                 <option id="mindtrails_movement" value="mindtrails_movement">Mindtrails Movement</option>
                 <option id="mindtrails_spanish" value="mindtrails_spanish">Mindtrails Spanish</option>
             </select><br><br>
-            <input type="text" id="commitmessage" name="commitmessage" placeholder="Enter a commit message for this release" required><br><br>
-            <textarea id="releasenotes" name="releasenotes" placeholder="Add release notes" rows="4" required></textarea><br><br>
+            <input type="text" id="commitmessage" class="dynamic-field" name="commitmessage" placeholder="Enter a commit message for this release" required><br><br>
+            <textarea id="releasenotes" class="dynamic-field" name="releasenotes" placeholder="Add release notes" rows="4" required></textarea><br><br>
             <label for="fileinput"></label>
-            <input type="file" id="fileinput" name="uploadedFiles" multiple="true" accept=".csv" required>
-            <button id="clearFilesButton" type="reset">Clear Files</button><br><br>
-            <label for="latest">Mark as latest?</label>
-            <input type="checkbox" id="latest" name="latest" checked><br><br>
-            <button type="submit">Deploy</button><br><br>
-            <button id="clearForm" type="clear">Clear Form</button><br>
-            <div id="messages"></div>
+            <input type="file" id="fileinput" class="dynamic-field" name="uploadedFiles" multiple="true" accept=".csv" required>
+            <button id="clearFilesButton" class="dynamic-field" type="reset">Clear Files</button><br><br>
+            <label for="latest" id="markAsLatestLabel" class="dynamic-field">Mark as latest?</label>
+            <input type="checkbox" id="latest" class="dynamic-field" name="latest" checked><br><br>
+            <button id="submitButton" type="submit" class="dynamic-field">Deploy</button><br><br>
+            <button id="clearForm" type="clear" class="dynamic-field">Clear Form</button><br>
+            <div id="messages" class="dynamic-field"></div>
         </form>
         </div>
         <div class="container-item" id="protocolInfo">Please select a protocol</div>

@@ -44,6 +44,10 @@ form {
     box-shadow: 0 4px 16px rgba(47, 42, 36, 0.06);
 }
 
+.form-hidden .dynamic-field{
+    display: none;
+}
+
 select,
 input[type="text"],
 textarea {
@@ -151,20 +155,43 @@ button[type="submit"]:hover {
     padding: 10px;
 }
 
-/* HTML: <div class="loader"></div> */
-.loader {
+.overlay-element {
+    padding: 1rem;
+}
+
+.overlay {
+  position: fixed; /* Sit on top of the page content */
+  display: none; /* Hidden by default; set to flex to show */
+  width: 100%; /* Full width (cover the whole page) */
+  height: 100%; /* Full height (cover the whole page) */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+  cursor: wait; /* Add a pointer on hover */
+}
+
+#spinner-overlay {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+
+/* HTML: <div id="loader"></div> */
+#loader {
   height: 60px;
   aspect-ratio: 2;
   border-bottom: 3px solid #0000;
   background: 
     linear-gradient(90deg,#524656 50%,#0000 0)
     -25% 100%/50% 3px repeat-x border-box;
-  position: absolute;
-  top: 42.5%;
-  left: 42.5%;
+  position: relative;
   animation: l3-0 .75s linear infinite;
 }
-.loader:before {
+#loader:before {
   content: "";
   position: absolute;
   inset: auto 42.5% 0;
@@ -181,16 +208,11 @@ button[type="submit"]:hover {
   98%,to {bottom:.1%}
 }
 
-#overlay {
-  position: fixed; /* Sit on top of the page content */
-  display: none; /* Hidden by default */
-  width: 100%; /* Full width (cover the whole page) */
-  height: 100%; /* Full height (cover the whole page) */
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0,0,0,0.5); /* Black background with opacity */
-  z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
-  cursor: wait; /* Add a pointer on hover */
+#loading-text {
+    max-width: 30rem;
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    text-align: center;
+    color: #000000;
 }

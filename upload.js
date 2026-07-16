@@ -9,15 +9,27 @@ function clearMessage(){
 }
 
 function showSpinner() {
-  document.getElementById("overlay").style.display = "block";
+  document.getElementById("spinner-overlay").style.display = "flex";
 }
 
 function hideSpinner() {
-  document.getElementById("overlay").style.display = "none";
+  document.getElementById("spinner-overlay").style.display = "none";
+}
+
+function hideForm(){
+    document.getElementById("fileProtocolForm").classList.add("form-hidden");
+}
+
+function showForm(){
+    document.getElementById("fileProtocolForm").classList.remove("form-hidden");
 }
 
 window.showMessage = showMessage;
 window.clearMessage = clearMessage;
+window.showSpinner = showSpinner;
+window.hideSpinner = hideSpinner;
+
+hideForm();
 
 document.getElementById("clearFilesButton").addEventListener("click", (e) => {
     e.preventDefault();
@@ -31,6 +43,7 @@ document.getElementById("clearForm").addEventListener("click", (e) => {
 });
 
 document.getElementById("protocol").addEventListener("change", () => {
+    showForm();
     clearMessage();
     const protocol = document.getElementById("protocol").value;
 
@@ -90,7 +103,7 @@ document.getElementById("fileinput").addEventListener("change", (e) => {
 })
 
 //there has to be a better way to do this...
-let isLatest = true;
+let isLatest = false;
 document.getElementById("latest").addEventListener("change", () => {
     isLatest = !isLatest;
 })
@@ -105,6 +118,7 @@ document.getElementById("fileProtocolForm").addEventListener("submit", async (e)
     const files = document.getElementById("fileinput").files;
     const commitMessage = document.getElementById("commitmessage").value;
     const releaseNotes = document.getElementById("releasenotes").value;
+    const loadingTextElement = document.getElementById("loading-text");
 
     if (files.length===0){
         showMessage("Error: no files uploaded", "red");
@@ -119,7 +133,7 @@ document.getElementById("fileProtocolForm").addEventListener("submit", async (e)
     //get file contents and call deploy function from requests.js
     //read every file to completion BEFORE deploying, otherwise fileContents is
     //still empty when deployProtocol runs (FileReader is async).
-
+    loadingTextElement.textContent = "Reading files...";
     const readFile = (file) => new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.onload = () => resolve(reader.result);

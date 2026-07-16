@@ -11,12 +11,19 @@ async function send(mcpMethod, params, requestID=null, mcpSessionID=null){
     if(requestID!==null) body.id = requestID;
     if(mcpSessionID!==null) mcpHeaders.append('mcp-session-id',mcpSessionID);
     
-    const res = await fetch(url, {
-        method: "POST",
-        headers: mcpHeaders,
-        body: JSON.stringify(body)
-    });
-
+    try{
+        const res = await fetch(url, {
+            method: "POST",
+            headers: mcpHeaders,
+            body: JSON.stringify(body)
+        });
+    } catch (err) {
+        setTimeout( () => {
+        window.hideSpinner();
+        showMessage("Error: could not reach the server", "red");
+        return {res: null, result: null};
+        }, 1000);
+    }
     // Notifications (no id) get 202 with no meaningful body — nothing to await.
     if (requestID === null) return { res, result: null };
 
@@ -51,6 +58,10 @@ const url = "https://protocol-builder-mcp.calmforest-c0a43ae0.eastus2.azureconta
 
 async function deployProtocol(protocol, fileContents, commitMessage, releaseNotes, isLatest){
     let id = 1;
+    const loadingTextElement = document.getElementById("loading-text");
+
+    loadingTextElement.textContent = "Connecting to the server...";
+
     //initialize
     const init = await send(
         "initialize", {
@@ -61,12 +72,13 @@ async function deployProtocol(protocol, fileContents, commitMessage, releaseNote
     );
 
     if(!(init.res.ok)) {
+        window.hideSpinner();
         showMessage("Error: Could not connect to the server", "red");
         return;
     }
     showMessage("Connected to the server", "green");
 
-
+    loadingTextElement.textContent = "Connected to the server";
 
     let mcpSessionID = init.res.headers.get('mcp-session-id');
 
@@ -74,10 +86,13 @@ async function deployProtocol(protocol, fileContents, commitMessage, releaseNote
     const initialized = await send("notifications/initialized", {}, null, mcpSessionID);
 
     if (!initialized.res.ok) {
+        window.hideSpinner();
         showMessage("Error: could not initialize", "red");
         return;
     }
     showMessage("Initialized", "green");
+
+    loadingTextElement.textContent = "Retrieving protocol...";
 
     id++;
     //ensure protocol_existence
@@ -95,10 +110,12 @@ async function deployProtocol(protocol, fileContents, commitMessage, releaseNote
     );
 
     if (get_protocol.result["isError"]){
+        window.hideSpinner();
         showMessage("Failed to retrieve protocol on server", "red");
         return;
     }
     showMessage("Retrieved protocol...", "green");
+    loadingTextElement.textContent = "Uploading files...";
 
     //replace CSV files
     for (const [filename, contents] of Object.entries(fileContents)) {
@@ -119,6 +136,7 @@ async function deployProtocol(protocol, fileContents, commitMessage, releaseNote
         );
 
         if (get_protocol.result["isError"]){
+            window.hideSpinner();
             showMessage(`Failed to read file ${filename}. Please try again`, "red");
             return;
         }
@@ -127,7 +145,7 @@ async function deployProtocol(protocol, fileContents, commitMessage, releaseNote
 
     showMessage("Files read succesfully", "green");
     id++;
-
+    loadingTextElement.textContent = "Building protocol...";
     //build/save/release
     const buildSaveRelease = await send(
         "tools/call", {
@@ -146,10 +164,16 @@ async function deployProtocol(protocol, fileContents, commitMessage, releaseNote
     );
 
     if (buildSaveRelease.result["isError"]){
+        window.hideSpinner();
         showMessage(`Release failed: ${buildSaveRelease.result}`);
     }
 
     showMessage("Succesfully deployed protocol!");
+    loadingTextElement.textContent = "Succesfully deployed protocol!";
+    
+    setTimeout( () => {
+        window.hideSpinner();
+    }, 1000);
 
 }
 
