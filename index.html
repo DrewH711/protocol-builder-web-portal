@@ -45,7 +45,7 @@
             <input type="file" id="fileinput" class="dynamic-field" name="uploadedFiles" multiple="true" accept=".csv" required>
             <button id="clearFilesButton" class="dynamic-field" type="reset">Clear Files</button><br><br>
             <label for="latest" id="markAsLatestLabel" class="dynamic-field">Mark as latest?</label>
-            <input type="checkbox" id="latest" class="dynamic-field" name="latest" checked><br><br>
+            <input type="checkbox" id="latest" class="dynamic-field" name="latest"><br><br>
             <button id="submitButton" type="submit" class="dynamic-field">Deploy</button><br><br>
             <button id="clearForm" type="clear" class="dynamic-field">Clear Form</button><br>
             <div id="messages" class="dynamic-field"></div>
@@ -54,10 +54,8 @@
         <div class="container-item" id="protocolInfo">Please select a protocol</div>
     </div>
     </div>
-    <div id="access-restricted-content">
-        <p>Please sign in to access this content<br>
-        <a href="https://clerk.portal.digital-trails.org/oauth/authorize">sign in</a>
-        </p>
+    <div id="default-content">
+        <p>You do not have access to this content.</p>
     </div>
 </body>
 
