@@ -6,11 +6,12 @@
 <link rel="stylesheet" href="styles.css">
 <script src="requests.js" defer></script>
 <script src="upload.js" defer></script>
-<script type="module" src="auth.js" defer></script>
+<script type="module" src="auth.js"></script>
 <link rel="icon" type="image/svg+xml" href="assets/digital-trails-logo.svg">
 </head>
 
 <body>
+    <div id="protected-content" hidden>
     <div class="overlay" id="spinner-overlay">
         <div id="loader" class="overlay-element"></div>
         <div id="loading-text" class="overlay-element"><p>What does it look like if the text is really long?</p></div>
@@ -44,13 +45,17 @@
             <input type="file" id="fileinput" class="dynamic-field" name="uploadedFiles" multiple="true" accept=".csv" required>
             <button id="clearFilesButton" class="dynamic-field" type="reset">Clear Files</button><br><br>
             <label for="latest" id="markAsLatestLabel" class="dynamic-field">Mark as latest?</label>
-            <input type="checkbox" id="latest" class="dynamic-field" name="latest" checked><br><br>
+            <input type="checkbox" id="latest" class="dynamic-field" name="latest"><br><br>
             <button id="submitButton" type="submit" class="dynamic-field">Deploy</button><br><br>
             <button id="clearForm" type="clear" class="dynamic-field">Clear Form</button><br>
             <div id="messages" class="dynamic-field"></div>
         </form>
         </div>
         <div class="container-item" id="protocolInfo">Please select a protocol</div>
+    </div>
+    </div>
+    <div id="default-content">
+        <p>You do not have access to this content.</p>
     </div>
 </body>
 

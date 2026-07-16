@@ -1,5 +1,5 @@
 async function send(mcpMethod, params, requestID=null, mcpSessionID=null){
-    const access_token = window.getClerkToken ? await window.getClerkToken() : sessionStorage.getItem('access_token');
+    const access_token = sessionStorage.getItem('access_token');
 
     const body = {jsonrpc : "2.0", method: mcpMethod, "params": params};
     
@@ -17,13 +17,7 @@ async function send(mcpMethod, params, requestID=null, mcpSessionID=null){
             headers: mcpHeaders,
             body: JSON.stringify(body)
         });
-    } catch (err) {
-        setTimeout( () => {
-        window.hideSpinner();
-        showMessage("Error: could not reach the server", "red");
-        return {res: null, result: null};
-        }, 1000);
-    }
+
     // Notifications (no id) get 202 with no meaningful body — nothing to await.
     if (requestID === null) return { res, result: null };
 
@@ -49,12 +43,19 @@ async function send(mcpMethod, params, requestID=null, mcpSessionID=null){
             }
         }
     }
-    
 
     return {res, result: null};
+
+    } catch (err) {
+        setTimeout( () => {
+        window.hideSpinner();
+        showMessage("Error: could not reach the server", "red");
+        return {res: null, result: null};
+        }, 1000);
+    }
 }
 
-const url = "https://protocol-builder-mcp.calmforest-c0a43ae0.eastus2.azurecontainerapps.io/mcp";
+const url = "http://localhost:8000/mcp";
 
 async function deployProtocol(protocol, fileContents, commitMessage, releaseNotes, isLatest){
     let id = 1;
