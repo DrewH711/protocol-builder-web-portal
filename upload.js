@@ -29,6 +29,8 @@ window.clearMessage = clearMessage;
 window.showSpinner = showSpinner;
 window.hideSpinner = hideSpinner;
 
+hideForm();
+
 document.getElementById("clearFilesButton").addEventListener("click", (e) => {
     e.preventDefault();
     document.getElementById("fileinput").value = "";
