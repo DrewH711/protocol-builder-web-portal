@@ -1,6 +1,6 @@
 import { Clerk } from 'https://cdn.jsdelivr.net/npm/@clerk/clerk-js@5/+esm';
 
-const clerk = new Clerk('pk_test_c3VwcmVtZS1oYWRkb2NrLTQwLmNsZXJrLmFjY291bnRzLmRldiQ');
+const clerk = new Clerk('pk_live_Y2xlcmsucG9ydGFsLmRpZ2l0YWwtdHJhaWxzLm9yZyQ');
 await clerk.load();                         
 
 async function syncAccessToken() {
