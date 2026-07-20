@@ -1,5 +1,5 @@
 async function send(mcpMethod, params, requestID=null, mcpSessionID=null){
-    const access_token = sessionStorage.getItem('access_token');
+    const access_token = await window.getClerkToken();
 
     const body = {jsonrpc : "2.0", method: mcpMethod, "params": params};
     
